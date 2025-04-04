@@ -99,7 +99,7 @@ namespace mode {
                     set_off();
                 }
 
-            } else if (hardware::temperature + maintain_delta_temperature <= pointer_temperature) {
+            } else if (hardware::temperature + maintain_delta_temperature < pointer_temperature) {
                 Serial.println("Maintain: low temperature, start heating.");
                 hardware::pump_status.set_now(true);
                 hardware::heater_status.set_now(true);
