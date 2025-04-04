@@ -19,14 +19,12 @@ namespace mode {
     extern unsigned int start_working_time, duration, disable_heater_time;
     extern double pointer_temperature;
 
-    void setup(Scheduler runner);
+    void setup(Scheduler &runner);
 
     void set_off();
     void set_filtering(unsigned int duration);
     void set_heating(double pointer_temperature);
     void set_maintaining(double pointer_temperature, unsigned int duration_value);
-
-    void handle();
 }
 
 #endif //HARDWARE_MODE_H

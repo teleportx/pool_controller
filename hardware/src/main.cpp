@@ -52,8 +52,10 @@ void setup() {
 
 void loop() {
     network_runner.execute();
-    ArduinoOTA.handle();
-    time_client.update();
+    if (WiFi.isConnected()) {
+        ArduinoOTA.handle();
+        time_client.update();
+    }
 }
 
 void loop2() {

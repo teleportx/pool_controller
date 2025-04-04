@@ -21,10 +21,10 @@ namespace web {
     void collect_data();
     void send_data();
 
-    Task collect_data_task(2000, TASK_FOREVER, &collect_data);
+    Task collect_data_task(3000, TASK_FOREVER, &collect_data);
     Task send_data_task(5000, TASK_FOREVER, &send_data);
 
-    void setup(Scheduler runner) {
+    void setup(Scheduler &runner) {
         server.begin();
 
         server.on("/data", HTTP_GET, [] (AsyncWebServerRequest *request) { web_data(request); });
@@ -72,6 +72,11 @@ namespace web {
     }
 
     void send_data() {
+        if (not WiFi.isConnected()) {
+            Serial.println("WiFi not connected, not sending to API ");
+            return;
+        }
+
         if (not data_actual) {
             Serial.println("Data not actual, not sending to API ");
             return;
@@ -82,7 +87,9 @@ namespace web {
         WiFiClient client;
         HTTPClient http;
 
-        const String url = String(api_url) + "/data";
+        String url = String(api_url);
+        url = url.substring(1, url.length() - 1);
+
         http.begin(client, url);
         http.setTimeout(api_timeout);
 

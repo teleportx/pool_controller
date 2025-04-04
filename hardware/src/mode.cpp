@@ -11,9 +11,10 @@ namespace mode {
     unsigned int start_working_time = 0, duration = 0, disable_heater_time = 0;
     double pointer_temperature = 35;
 
+    void handle();
     Task handle_task(2500, TASK_FOREVER, &handle);
 
-    void setup(Scheduler runner) {
+    void setup(Scheduler &runner) {
         runner.addTask(handle_task);
         handle_task.enable();
     }

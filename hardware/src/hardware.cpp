@@ -41,7 +41,7 @@ namespace hardware {
     Task handle_relays_task(2500, TASK_FOREVER, &handle_relays);
     Task handle_sensors_task(5000, TASK_FOREVER, &handle_sensors);
 
-    void setup(Scheduler runner) {
+    void setup(Scheduler &runner) {
         ACS.autoMidPoint();
         Serial.print("MidPoint: ");
         Serial.print(ACS.getMidPoint());

@@ -6,7 +6,7 @@
 namespace web {
     constexpr unsigned int api_timeout = 1000; // API timeout in ms
 
-    void setup(Scheduler runner);
+    void setup(Scheduler &runner);
 }
 
 #endif //HARDWARE_WEB_H

@@ -22,7 +22,7 @@ namespace hardware {
     extern Status pump_status, heater_status;
     extern double temperature, currency;
 
-    void setup(Scheduler runner);
+    void setup(Scheduler &runner);
 }
 
 #endif //HARDWARE_HARDWARE_H
