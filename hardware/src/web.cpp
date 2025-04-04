@@ -158,6 +158,11 @@ namespace web {
 
         } else {
             request->send(400, "application/json", R"({"detail": "Unknown mode."})");
+            return;
         }
+
+        Serial.println("Accepted control request.");
+        collect_data();
+        request->send(200, data);
     }
 }
