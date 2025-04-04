@@ -99,13 +99,13 @@ namespace mode {
                     set_off();
                 }
 
-            } else if (hardware::temperature + maintain_delta_temperature < pointer_temperature) {
+            } else if (hardware::temperature + maintain_delta_temperature <= pointer_temperature) {
                 Serial.println("Maintain: low temperature, start heating.");
                 hardware::pump_status.set_now(true);
                 hardware::heater_status.set_now(true);
                 disable_heater_time = 0;
 
-            } else if (hardware::temperature > pointer_temperature and disable_heater_time == 0) {
+            } else if (hardware::temperature >= pointer_temperature and disable_heater_time == 0 and hardware::heater_status.get_now()) {
                 Serial.println("Maintain: pointer_temperature reached, start cooling heater. Disabling heater.");
                 hardware::pump_status.set_now(true);
                 hardware::heater_status.set_now(false);
