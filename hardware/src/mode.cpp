@@ -56,7 +56,7 @@ namespace mode {
         start_working_time = time_client.getEpochTime();
         pointer_temperature = pointer_temperature_value;
 
-        if ((hardware::temperature + maintain_delta_temperature) < pointer_temperature) {
+        if (hardware::temperature < pointer_temperature) {
             hardware::pump_status.set_now(true);
             hardware::heater_status.set_now(true);
         }

@@ -60,6 +60,7 @@ namespace hardware {
             digitalWrite(PIN::PUMP_RELAY, pump_status.get_last());
 
             if (not pump_status.get_last()) {
+                Serial.println("Disabling heater because pump not working.");
                 digitalWrite(PIN::HEATER_RELAY, LOW);
                 heater_status.set_now(false);
             }
@@ -69,8 +70,9 @@ namespace hardware {
             digitalWrite(PIN::HEATER_RELAY, heater_status.get_last());
 
             if (heater_status.get_last()) {
+                Serial.println("Enabling pump because heater working.");
                 digitalWrite(PIN::PUMP_RELAY, HIGH);
-                pump_status.set_now(false);
+                pump_status.set_now(true);
             }
         }
     }
