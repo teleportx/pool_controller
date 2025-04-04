@@ -138,6 +138,11 @@ namespace web {
             request->send(400, "application/json", R"({"detail": "pointer_temperature must be double."})");
             return;
         }
+        if ((mode_value == mode::Mode(mode::HEATING) or mode_value == mode::Mode(mode::MAINTAINING)) and payload["pointer_temperature"].as<double>() >= hardware::critical_temperature) {
+            request->send(400, "application/json", R"({"detail": "pointer_temperature cannot be greater or equal critical temperature."})");
+            return;
+        }
+
 
         if ((mode_value == mode::Mode(mode::FILTERING) or mode_value == mode::Mode(mode::MAINTAINING)) and not payload["duration"].is<unsigned int>()) {
             request->send(400, "application/json", R"({"detail": "duration must be unsigned int".})");
