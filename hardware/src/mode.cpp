@@ -57,12 +57,13 @@ namespace mode {
         mtx.unlock();
     }
 
-    void set_maintaining(double pointer_temperature_value) {
+    void set_maintaining(double pointer_temperature_value, unsigned int duration_value) {
         if (pointer_temperature_value > hardware::critical_temperature) return;
         set_heating(pointer_temperature_value);
 
         mtx.lock();
         mode = Mode(MAINTAINING);
+        duration_value = duration;
         mtx.unlock();
     }
 

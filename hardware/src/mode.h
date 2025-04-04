@@ -24,7 +24,7 @@ namespace mode {
     void set_off();
     void set_filtering(unsigned int duration);
     void set_heating(double pointer_temperature);
-    void set_maintaining(double pointer_temperature);
+    void set_maintaining(double pointer_temperature, unsigned int duration_value);
 
     void handle();
 }

@@ -121,6 +121,36 @@ namespace web {
     }
 
     void web_control(AsyncWebServerRequest *request, JsonVariant &payload) {
+        if (not payload["mode"].is<int>()) {
+            request->send(400, "application/json", R"({"detail": "mode must be int."})");
+            return;
+        }
+        int mode_value = payload["mode"].is<int>();
 
+        if ((mode_value == mode::Mode(mode::HEATING) or mode_value == mode::Mode(mode::MAINTAINING)) and not payload["pointer_temperature"].is<double>()) {
+            request->send(400, "application/json", R"({"detail": "pointer_temperature must be double."})");
+            return;
+        }
+
+        if ((mode_value == mode::Mode(mode::FILTERING) or mode_value == mode::Mode(mode::MAINTAINING)) and not payload["duration"].is<unsigned int>()) {
+            request->send(400, "application/json", R"({"detail": "duration must be unsigned int".})");
+            return;
+        }
+
+        if (mode_value == mode::Mode(mode::OFF)) {
+            mode::set_off();
+
+        } else if (mode_value == mode::Mode(mode::FILTERING)) {
+            mode::set_filtering(payload["duration"].as<unsigned int>());
+
+        } else if (mode_value == mode::Mode(mode::HEATING)) {
+            mode::set_heating(payload["pointer_temperature"].as<double>());
+
+        } else if (mode_value == mode::Mode(mode::MAINTAINING)) {
+            mode::set_maintaining(payload["pointer_temperature"].as<double>(), payload["duration"].as<unsigned int>());
+
+        } else {
+            request->send(400, "application/json", R"({"detail": "Unknown mode."})");
+        }
     }
 }
