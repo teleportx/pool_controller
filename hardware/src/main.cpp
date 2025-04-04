@@ -8,6 +8,7 @@
 #include "hardware.h"
 #include "ntp.h"
 #include "mode.h"
+#include "web.h"
 
 TaskHandle_t loop2_task;
 void loop2();
@@ -38,6 +39,7 @@ void setup() {
 
     hardware::setup(hardware_runner);
     mode::setup(hardware_runner);
+    web::setup(network_runner);
 
     xTaskCreatePinnedToCore(
             [](void *) {

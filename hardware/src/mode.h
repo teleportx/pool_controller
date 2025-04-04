@@ -16,6 +16,9 @@ namespace mode {
 
     extern Mode mode;
 
+    extern unsigned int start_working_time, duration, disable_heater_time;
+    extern double pointer_temperature;
+
     void setup(Scheduler runner);
 
     void set_off();

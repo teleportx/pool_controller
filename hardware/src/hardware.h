@@ -11,6 +11,7 @@ public:
 
     bool changed();
     void set_now(bool value);
+    bool get_now() const;
     bool get_last() const;
 };
 

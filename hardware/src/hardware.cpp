@@ -19,6 +19,10 @@ void Status::set_now(bool value) {
     mtx.unlock();
 }
 
+bool Status::get_now() const {
+    return now;
+}
+
 bool Status::get_last() const {
     return last;
 }

@@ -22,5 +22,6 @@ const auto wifi_ssid = ENV(WIFI_SSID);
 const auto wifi_password = ENV(WIFI_PASSWORD);
 const auto ntp_host = ENV(NTP_HOST);
 const auto api_key = ENV(API_KEY);
+const auto api_url = ENV(API_URL);
 
 #endif //HARDWARE_CONFIG_H
