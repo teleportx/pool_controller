@@ -5,9 +5,9 @@
 #define ENV(x) XSTR(x)
 
 namespace PIN {
-    constexpr unsigned int CURRENCY_SENSOR = 39;
-    constexpr unsigned int TEMPERATURE_SENSOR = 34;
-    constexpr unsigned int ACTION_BUTTON = 35;
+    constexpr unsigned int CURRENCY_SENSOR = 35;
+    constexpr unsigned int TEMPERATURE_SENSOR = 15;
+    constexpr unsigned int ACTION_BUTTON = 2;
     constexpr unsigned int DISPLAY_CLK = 32;
     constexpr unsigned int DISPLAY_DIO = 33;
     constexpr unsigned int ENCODER_SW = 25; // Encoder button

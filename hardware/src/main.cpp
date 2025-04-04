@@ -19,7 +19,7 @@ TM1637Display display = TM1637Display(PIN::DISPLAY_CLK, PIN::DISPLAY_DIO);
 Scheduler hardware_runner, network_runner;
 
 void setup() {
-    pinMode(PIN::TEMPERATURE_SENSOR, INPUT);
+    pinMode(PIN::TEMPERATURE_SENSOR, INPUT_PULLUP);
     pinMode(PIN::ACTION_BUTTON, INPUT_PULLUP);
 
     pinMode(PIN::PUMP_RELAY, OUTPUT);
