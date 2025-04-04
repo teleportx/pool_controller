@@ -132,7 +132,7 @@ namespace web {
             request->send(400, "application/json", R"({"detail": "mode must be int."})");
             return;
         }
-        int mode_value = payload["mode"].is<int>();
+        int mode_value = payload["mode"].as<int>();
 
         if ((mode_value == mode::Mode(mode::HEATING) or mode_value == mode::Mode(mode::MAINTAINING)) and not payload["pointer_temperature"].is<double>()) {
             request->send(400, "application/json", R"({"detail": "pointer_temperature must be double."})");
