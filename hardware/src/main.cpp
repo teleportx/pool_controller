@@ -1,6 +1,4 @@
 #include <Arduino.h>
-#include <ESP32Encoder.h>
-#include <TM1637Display.h>
 #include <ArduinoOTA.h>
 #include <TaskScheduler.h>
 
@@ -9,12 +7,12 @@
 #include "ntp.h"
 #include "mode.h"
 #include "web.h"
+#include "panel.h"
 
 TaskHandle_t loop2_task;
 void loop2();
 
-ESP32Encoder encoder;
-TM1637Display display = TM1637Display(PIN::DISPLAY_CLK, PIN::DISPLAY_DIO);
+
 
 Scheduler hardware_runner, network_runner;
 
@@ -24,8 +22,6 @@ void setup() {
 
     pinMode(PIN::PUMP_RELAY, OUTPUT);
     pinMode(PIN::HEATER_RELAY, OUTPUT);
-
-    pinMode(PIN::ENCODER_SW, INPUT_PULLUP);
 
     pinMode(PIN::DISPLAY_CLK, OUTPUT);
     pinMode(PIN::DISPLAY_DIO, OUTPUT);
@@ -38,6 +34,7 @@ void setup() {
     time_client.begin();
 
     hardware::setup(hardware_runner);
+    panel::setup();
     mode::setup(hardware_runner);
     web::setup(network_runner);
 
@@ -60,4 +57,5 @@ void loop() {
 
 void loop2() {
     hardware_runner.execute();
+    panel::loop();
 }

@@ -84,7 +84,7 @@ namespace hardware {
         temperature_sensor.write(0xCC); // Send command: skip address find
         temperature_sensor.write(0x44); // Send command: register temperature
 
-        delay(500); // Waiting for registering
+        delay(50); // Waiting for registering
 
         temperature_sensor.reset();
         temperature_sensor.write(0xCC);
