@@ -23,8 +23,8 @@ namespace panel {
     unsigned int now_duration, now_pointer_temperature;
 
     bool need_blink() {
-        if (esp_timer_get_time() / 1000 - last_blink >= 500) {
-            if ((esp_timer_get_time() / 1000 - last_blink) >= 1000)
+        if (esp_timer_get_time() / 1000 - last_blink >= 250) {
+            if ((esp_timer_get_time() / 1000 - last_blink) >= 500)
                 last_blink = esp_timer_get_time() / 1000;
 
             return true;
