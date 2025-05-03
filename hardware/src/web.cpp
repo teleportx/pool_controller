@@ -50,7 +50,7 @@ namespace web {
 
         jdata["timestamp"] = time_client.getEpochTime();
         jdata["pump_relay"] = hardware::pump_status.get_now();
-        jdata["heater_relay"] = hardware::pump_status.get_now();
+        jdata["heater_relay"] = hardware::heater_status.get_now();
 
         jdata["temperature"] = hardware::temperature;
         jdata["currency"] = hardware::currency;
