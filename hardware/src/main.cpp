@@ -28,14 +28,14 @@ void setup() {
 
     Serial.begin(115200);
 
+    hardware::setup(hardware_runner);
+    panel::setup();
+    mode::setup(hardware_runner);
+
     WiFi.begin(wifi_ssid, wifi_password);
     ArduinoOTA.setHostname(device_name);
     ArduinoOTA.begin();
     time_client.begin();
-
-    hardware::setup(hardware_runner);
-    panel::setup();
-    mode::setup(hardware_runner);
     web::setup(network_runner);
 
     xTaskCreatePinnedToCore(
