@@ -129,7 +129,7 @@ namespace panel {
 
         if (encoder_button.pressed()) {
             if (now_mode == mode::OFF) {
-                mode::set_off(); // TODO: make graceful off
+                mode::set_graceful_off();
                 now_screen = new ScreenDone();
 
             } else if (now_mode == mode::FILTERING or now_mode == mode::MAINTAINING) {

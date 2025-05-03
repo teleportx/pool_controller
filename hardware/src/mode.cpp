@@ -31,6 +31,13 @@ namespace mode {
         mtx.unlock();
     }
 
+    void set_graceful_off() {
+        if (hardware::heater_status.get_now())
+            set_filtering(cooling_time);
+        else
+            set_off();
+    }
+
     void set_filtering(unsigned int duration_value) {
         mtx.lock();
 

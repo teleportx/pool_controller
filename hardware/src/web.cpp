@@ -150,7 +150,10 @@ namespace web {
         }
 
         if (mode_value == mode::Mode(mode::OFF)) {
-            mode::set_off();
+            if (payload["duration"].is<bool>() and payload["duration"].as<bool>())
+                mode::set_graceful_off();
+            else
+                mode::set_off();
 
         } else if (mode_value == mode::Mode(mode::FILTERING)) {
             mode::set_filtering(payload["duration"].as<unsigned int>());

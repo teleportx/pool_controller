@@ -11,7 +11,7 @@ namespace mode {
         MAINTAINING = 3
     };
 
-    constexpr unsigned int cooling_time = 15;
+    constexpr unsigned int cooling_time = 15 * 60;
     constexpr double maintain_delta_temperature = 0.5;
 
     extern Mode mode;
@@ -22,6 +22,7 @@ namespace mode {
     void setup(Scheduler &runner);
 
     void set_off();
+    void set_graceful_off();
     void set_filtering(unsigned int duration);
     void set_heating(double pointer_temperature);
     void set_maintaining(double pointer_temperature, unsigned int duration_value);
