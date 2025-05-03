@@ -12,7 +12,8 @@
 
 namespace panel {
     ESP32Encoder encoder;
-    Bounce2::Button button = Bounce2::Button();
+    Bounce2::Button encoder_button = Bounce2::Button();
+    Bounce2::Button action_button = Bounce2::Button();
     TM1637Display display = TM1637Display(PIN::DISPLAY_CLK, PIN::DISPLAY_DIO);
 
 
@@ -85,7 +86,7 @@ namespace panel {
 
         display.setSegments(display_data, 4, 0);
 
-        if (button.pressed()) {
+        if (encoder_button.pressed()) {
             now_screen = new ScreenSetMode();
             delete this;
         }
@@ -126,7 +127,7 @@ namespace panel {
 
         display.setSegments(display_data, 4, 0);
 
-        if (button.pressed()) {
+        if (encoder_button.pressed()) {
             if (now_mode == mode::OFF) {
                 mode::set_off(); // TODO: make graceful off
                 now_screen = new ScreenDone();
@@ -160,7 +161,7 @@ namespace panel {
 
         display.setSegments(display_data, 4, 0);
 
-        if (button.pressed()) {
+        if (encoder_button.pressed()) {
             if (now_mode == mode::FILTERING) {
                 mode::set_filtering(now_duration * 60 * 60);
                 now_screen = new ScreenDone();
@@ -191,7 +192,7 @@ namespace panel {
 
         display.setSegments(display_data, 4, 0);
 
-        if (button.pressed()) {
+        if (encoder_button.pressed()) {
             if (now_mode == mode::HEATING) {
                 mode::set_heating(now_pointer_temperature);
                 now_screen = new ScreenDone();
@@ -210,9 +211,13 @@ namespace panel {
         encoder.attachHalfQuad(PIN::ENCODER_CLK, PIN::ENCODER_DT);
         encoder.setCount(0);
 
-        button.attach(PIN::ENCODER_SW, INPUT_PULLUP);
-        button.interval(5);
-        button.setPressedState(LOW);
+        encoder_button.attach(PIN::ENCODER_SW, INPUT_PULLUP);
+        encoder_button.interval(5);
+        encoder_button.setPressedState(LOW);
+
+        action_button.attach(PIN::ACTION_BUTTON, INPUT_PULLUP);
+        action_button.interval(5);
+        action_button.setPressedState(LOW);
 
         display.clear();
         display.setBrightness(7);
@@ -221,7 +226,13 @@ namespace panel {
     }
 
     void loop() {
-        button.update();
+        encoder_button.update();
+        action_button.update();
+
+        if (action_button.isPressed()) {
+            mode::set_off();
+        }
+
         now_screen->handle();
     }
 }
