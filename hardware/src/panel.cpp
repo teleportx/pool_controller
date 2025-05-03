@@ -8,6 +8,7 @@
 #include "config.h"
 #include "hardware.h"
 #include "mode.h"
+#include "ntp.h"
 
 
 namespace panel {
@@ -36,6 +37,7 @@ namespace panel {
 
     class ScreenHome : public IScreen {
     public:
+        ScreenHome();
         void handle() override;
     };
 
@@ -66,22 +68,42 @@ namespace panel {
         void handle() override;
     };
 
+    ScreenHome::ScreenHome() {
+        encoder.setCount(0);
+    }
+
     void ScreenHome::handle() {
         const int temperature = round(hardware::temperature);
 
         uint8_t display_data[] = {
                 0,
                 0,
-                display.encodeDigit(temperature / 10),
-                display.encodeDigit(temperature % 10),
+                0,
+                0,
         };
 
-        if (need_blink()) {
-            if (mode::mode != mode::Mode(mode::OFF))
-                display_data[3] |= SEG_DP;
+        int page = abs(encoder.getCount()) / 2 % 3;
+        if (page == 0) {
+            display_data[2] |= display.encodeDigit(temperature / 10);
+            display_data[3] |= display.encodeDigit(temperature % 10);
 
-            if (not WiFi.isConnected())
-                display_data[0] |= SEG_F | SEG_A | SEG_B;
+            if (need_blink()) {
+                if (mode::mode != mode::Mode(mode::OFF))
+                    display_data[3] |= SEG_DP;
+
+                if (not WiFi.isConnected())
+                    display_data[0] |= SEG_F | SEG_A | SEG_B;
+            }
+
+        } else if (page == 1) {
+            display_data[2] |= SEG_E | SEG_F | SEG_A | SEG_B | SEG_G | SEG_DP;
+            display_data[3] |= display.encodeDigit(mode::mode);
+
+        } else if (page == 2) {
+            display_data[0] |= display.encodeDigit(time_client.getHours() / 10);
+            display_data[1] |= display.encodeDigit(time_client.getHours() % 10) | SEG_DP;
+            display_data[2] |= display.encodeDigit(time_client.getMinutes() / 10);
+            display_data[3] |= display.encodeDigit(time_client.getMinutes() % 10);
         }
 
         display.setSegments(display_data, 4, 0);
