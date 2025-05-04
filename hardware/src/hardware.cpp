@@ -33,7 +33,7 @@ namespace hardware {
     OneWire temperature_sensor(PIN::TEMPERATURE_SENSOR);
     double temperature, currency;
 
-    ACS712 ACS(PIN::CURRENCY_SENSOR, 5, 4095, 100);
+    ACS712 ACS(PIN::CURRENCY_SENSOR, 3.3, 4095, 100);
 
     void handle_relays();
     void handle_sensors();
@@ -98,6 +98,7 @@ namespace hardware {
 
         currency = ACS.mA_AC_sampling();
         Serial.println("Currency: " + String(currency));
+        Serial.println(analogRead(PIN::CURRENCY_SENSOR));
 
         // High temperature protection
         if (temperature > critical_temperature) {

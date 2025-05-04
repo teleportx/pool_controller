@@ -82,7 +82,7 @@ namespace panel {
                 0,
         };
 
-        int page = abs(encoder.getCount()) / 2 % 3;
+        int page = abs(encoder.getCount()) / 2 % 4;
         if (page == 0) {
             display_data[2] |= display.encodeDigit(temperature / 10);
             display_data[3] |= display.encodeDigit(temperature % 10);
@@ -100,13 +100,17 @@ namespace panel {
             display_data[3] |= display.encodeDigit(mode::mode);
 
         } else if (page == 2) {
+            display.showNumberDec(int(hardware::currency));
+
+        } else if (page == 3) {
             display_data[0] |= display.encodeDigit(time_client.getHours() / 10);
             display_data[1] |= display.encodeDigit(time_client.getHours() % 10) | SEG_DP;
             display_data[2] |= display.encodeDigit(time_client.getMinutes() / 10);
             display_data[3] |= display.encodeDigit(time_client.getMinutes() % 10);
         }
 
-        display.setSegments(display_data, 4, 0);
+        if (page != 2)
+            display.setSegments(display_data, 4, 0);
 
         if (encoder_button.pressed()) {
             now_screen = new ScreenSetMode();
