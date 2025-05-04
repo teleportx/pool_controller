@@ -100,7 +100,7 @@ namespace panel {
             display_data[3] |= display.encodeDigit(mode::mode);
 
         } else if (page == 2) {
-            display.showNumberDec(int(hardware::currency));
+            display.showNumberDec(int(hardware::currency * 1000));
 
         } else if (page == 3) {
             display_data[0] |= display.encodeDigit(time_client.getHours() / 10);

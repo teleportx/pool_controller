@@ -96,8 +96,8 @@ namespace hardware {
         temperature =  ((ds_data[1] << 8) | ds_data[0]) * 0.0625;
         Serial.println("Temperature: " + String(temperature));
 
-        currency = ACS.mA_AC_sampling();
-        Serial.println("Currency: " + String(currency));
+        currency = ACS.mA_AC_sampling() / 1000;
+        Serial.println("Currency: " + String(currency * 1000) + " mA");
         Serial.println(analogRead(PIN::CURRENCY_SENSOR));
 
         // High temperature protection
