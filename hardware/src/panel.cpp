@@ -84,8 +84,9 @@ namespace panel {
 
         int page = abs(encoder.getCount()) / 2 % 4;
         if (page == 0) {
-            display_data[2] |= display.encodeDigit(temperature / 10);
-            display_data[3] |= display.encodeDigit(temperature % 10);
+            display_data[1] |= display.encodeDigit(temperature / 10);
+            display_data[2] |= display.encodeDigit(temperature % 10);
+            display_data[3] |= SEG_A | SEG_B | SEG_G | SEG_F;
 
             if (need_blink()) {
                 if (mode::mode != mode::Mode(mode::OFF))
