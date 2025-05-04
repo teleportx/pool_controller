@@ -142,7 +142,8 @@ namespace panel {
     }
 
     void ScreenSetMode::handle() {
-        now_mode = mode::Mode((encoder.getCount() / 2 % 4 + 4) % 4);
+        const int modes = 5;
+        now_mode = mode::Mode((encoder.getCount() / 2 % modes + modes) % modes);
 
         uint8_t display_data[] = {
                 0,
@@ -150,6 +151,11 @@ namespace panel {
                 SEG_E | SEG_F | SEG_A | SEG_B | SEG_G,
                 display.encodeDigit(now_mode),
         };
+
+        if (int(now_mode) == modes - 1) {
+            display_data[2] = 0;
+            display_data[3] = display.encodeDigit(12);
+        }
 
         display.setSegments(display_data, 4, 0);
 
@@ -163,6 +169,9 @@ namespace panel {
 
             } else if (now_mode == mode::HEATING) {
                 now_screen = new ScreenSetPointerTemperature();
+
+            } else {
+                now_screen = new ScreenHome();
             }
 
             delete this;
