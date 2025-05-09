@@ -102,6 +102,7 @@ namespace hardware {
 
         // High temperature protection
         if (temperature > critical_temperature) {
+            Serial.println("Critical temperature.");
             mode::set_off();
         }
     }
