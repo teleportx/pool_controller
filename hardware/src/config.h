@@ -8,8 +8,8 @@ namespace PIN {
     constexpr unsigned int CURRENCY_SENSOR = 35;
     constexpr unsigned int TEMPERATURE_SENSOR = 15;
     constexpr unsigned int ACTION_BUTTON = 4;
-    constexpr unsigned int DISPLAY_CLK = 32;
-    constexpr unsigned int DISPLAY_DIO = 33;
+    constexpr unsigned int DISPLAY_CLK = 33;
+    constexpr unsigned int DISPLAY_DIO = 32;
     constexpr unsigned int ENCODER_SW = 25; // Encoder button
     constexpr unsigned int ENCODER_DT = 26;
     constexpr unsigned int ENCODER_CLK = 27;
