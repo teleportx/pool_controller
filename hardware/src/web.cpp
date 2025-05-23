@@ -49,6 +49,7 @@ namespace web {
         JsonDocument jdata;
 
         jdata["timestamp"] = time_client.getEpochTime();
+        jdata["uptime"] = esp_timer_get_time() / 1000000ll;
         jdata["pump_relay"] = hardware::pump_status.get_now();
         jdata["heater_relay"] = hardware::heater_status.get_now();
 
