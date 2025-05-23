@@ -11,10 +11,10 @@ namespace PIN {
     constexpr unsigned int DISPLAY_CLK = 32;
     constexpr unsigned int DISPLAY_DIO = 33;
     constexpr unsigned int ENCODER_SW = 25; // Encoder button
-    constexpr unsigned int ENCODER_DT = 26;
-    constexpr unsigned int ENCODER_CLK = 27;
-    constexpr unsigned int PUMP_RELAY = 12;
-    constexpr unsigned int HEATER_RELAY = 13;
+    constexpr unsigned int ENCODER_DT = 27;
+    constexpr unsigned int ENCODER_CLK = 26;
+    constexpr unsigned int PUMP_RELAY = 13;
+    constexpr unsigned int HEATER_RELAY = 12;
 }
 
 const auto device_name = ENV(DEVICE_NAME);
