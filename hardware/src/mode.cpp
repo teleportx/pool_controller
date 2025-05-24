@@ -44,7 +44,7 @@ namespace mode {
         mode = Mode(FILTERING);
         Serial.println("Set mode FILTERING.");
 
-        start_working_time = time_client.getEpochTime();
+        start_working_time = get_hardware_timestamp();
         duration = duration_value;
 
         hardware::pump_status.set_now(true);
@@ -60,7 +60,7 @@ namespace mode {
         mode = Mode(HEATING);
         Serial.println("Set mode HEATING.");
 
-        start_working_time = time_client.getEpochTime();
+        start_working_time = get_hardware_timestamp();
         pointer_temperature = pointer_temperature_value;
 
         if (hardware::temperature < pointer_temperature) {
@@ -84,7 +84,7 @@ namespace mode {
 
     void handle() {
         if (mode == Mode(FILTERING)) {
-            if ((time_client.getEpochTime() - start_working_time) >= duration) {
+            if ((get_hardware_timestamp() - start_working_time) >= duration) {
                 Serial.println("Filtering: time's up. Disabling pump.");
                 set_off();
             }
@@ -96,7 +96,7 @@ namespace mode {
             }
 
         } else if (mode == Mode(MAINTAINING)) {
-            if ((time_client.getEpochTime() - start_working_time) >= duration) {
+            if ((get_hardware_timestamp() - start_working_time) >= duration) {
                 if (hardware::heater_status.get_last()) {
                     Serial.println("Maintain: time's up. Start cooling because heater was running. Disabling heater.");
                     set_filtering(cooling_time); // Cooling heater after work
@@ -116,10 +116,10 @@ namespace mode {
                 Serial.println("Maintain: pointer_temperature reached, start cooling heater. Disabling heater.");
                 hardware::pump_status.set_now(true);
                 hardware::heater_status.set_now(false);
-                disable_heater_time = time_client.getEpochTime();
+                disable_heater_time = get_hardware_timestamp();
 
             } else if (disable_heater_time != 0) { // Cooling heater after work
-                if ((time_client.getEpochTime() - disable_heater_time) >= cooling_time) {
+                if ((get_hardware_timestamp() - disable_heater_time) >= cooling_time) {
                     Serial.println("Maintain: cooling time's up. Disabling pump.");
                     hardware::pump_status.set_now(false);
                     hardware::heater_status.set_now(false);
