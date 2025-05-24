@@ -11,7 +11,7 @@ namespace mode {
         MAINTAINING = 3
     };
 
-    constexpr unsigned int cooling_time = 15 * 60;
+    constexpr unsigned int cooling_time = 3 * 60;
     constexpr double maintain_delta_temperature = 0.5;
 
     extern Mode mode;
