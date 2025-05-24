@@ -151,7 +151,7 @@ namespace web {
         }
 
         if (mode_value == mode::Mode(mode::OFF)) {
-            if (payload["duration"].is<bool>() and payload["duration"].as<bool>())
+            if (payload["graceful"].is<bool>() and payload["graceful"].as<bool>())
                 mode::set_graceful_off();
             else
                 mode::set_off();
