@@ -172,6 +172,6 @@ namespace web {
 
         Serial.println("Accepted control request.");
         collect_data();
-        request->send(200, data);
+        request->send(200, "application/json", data);
     }
 }
