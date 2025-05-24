@@ -82,7 +82,8 @@ namespace panel {
                 0,
         };
 
-        int page = (encoder.getCount() / 2 % 4 + 4) % 4;
+        const int PG = 3;
+        int page = ((encoder.getCount() / 2) % PG + PG) % PG;
         if (page == 0) {
             display_data[1] |= display.encodeDigit(temperature / 10);
             display_data[2] |= display.encodeDigit(temperature % 10);
@@ -97,21 +98,18 @@ namespace panel {
             }
 
         } else if (page == 1) {
+            display_data[1] |= SEG_E | SEG_G | SEG_C;
             display_data[2] |= SEG_E | SEG_F | SEG_A | SEG_B | SEG_G | SEG_DP;
             display_data[3] |= display.encodeDigit(mode::mode);
 
         } else if (page == 2) {
-            display.showNumberDec(int(hardware::currency * 1000));
-
-        } else if (page == 3) {
             display_data[0] |= display.encodeDigit(time_client.getHours() / 10);
             display_data[1] |= display.encodeDigit(time_client.getHours() % 10) | SEG_DP;
             display_data[2] |= display.encodeDigit(time_client.getMinutes() / 10);
             display_data[3] |= display.encodeDigit(time_client.getMinutes() % 10);
         }
 
-        if (page != 2)
-            display.setSegments(display_data, 4, 0);
+        display.setSegments(display_data, 4, 0);
 
         if (encoder_button.pressed()) {
             now_screen = new ScreenSetMode();
