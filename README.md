@@ -47,6 +47,26 @@ Detailed scheme in [fritizing scheme](scheme.fzz).
  - Power unit 5V
  - ACS712 + 3x 1 kOm resistors (currency sensor for dry running check) (not required) 
 
+## Building and uploading
+
+Open [platformio](https://platformio.org/) project in folder `hardware`. Create `.env` file and specify [environment](#environment) variables. Then build and upload to your esp32 board.
+
+### Environment
+ - `DEVICE_NAME` - device hostname uses for OTA.
+ - `WIFI_SSID` - Wifi SSID.
+ - `WIFI_PASSWORD` - Wifi password.
+ - `NTP_HOST` - NTP server host.
+ - `API_URL` - URL for [data collection](#data-collection) from controller. (e.g. `'"http://10.0.0.123:123/data"'`)
+ - `API_KEY` - Authorization key for [data collection](#data-collection). 
+
+### Data collection
+
+Controller can automatically make HTTP requests to your server with data.
+
+Controller makes `POST` request to `API_URL`. Body will contain data (see format [later](#api)) and in header `Authorization` will be `API_KEY`.
+
+The controller will do this once every 5 seconds.
+
 ## Managing controller
 
 ### Manual
@@ -110,7 +130,7 @@ POST /reboot
 Authorization: <API_KEY>
 ```
 
-OK answer not guaranteed.
+OK answer not guaranteed. `API_KEY` is an [environment](#environment) variable.
 
 
 **Set mode OFF**
