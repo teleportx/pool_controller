@@ -14,6 +14,19 @@ You can set:
 If necessery (e.g. three-phase connection) you can connect heater or pump over AC contactor.
 You can also install temperature sensor in another location, for example in pool, but don't install sensor near the heater output, it may mess up temperature data.
 
+### Content
+  - [How it works?](#how-it-works)
+    - [Controller scheme](#controller-scheme)
+
+  - [Build and upload](#build-and-upload)
+    - [Environment](#environment)
+    - [Data collection](#data-collection)
+  
+  - [Manage](#manage)
+    - [Manual](#manual)
+    - [Web UI](#web-ui)
+    - [API](#api)
+
 ## How it works?
 
 You set the mode (M), operation time (OT) and pointer temperature (PT). Using a relays the pump and heater switching on. Getting temperature (T) using sensor.
@@ -47,7 +60,7 @@ Detailed scheme in [fritizing scheme](scheme.fzz).
  - Power unit 5V
  - ACS712 + 3x 1 kOm resistors (currency sensor for dry running check) (not required) 
 
-## Building and uploading
+## Build and upload
 
 Open [platformio](https://platformio.org/) project in folder `hardware`. Create `.env` file and specify [environment](#environment) variables. Then build and upload to your esp32 board.
 
@@ -67,7 +80,7 @@ Controller makes `POST` request to `API_URL`. Body will contain data (see format
 
 The controller will do this once every 5 seconds.
 
-## Managing controller
+## Manage
 
 ### Manual
 
