@@ -39,7 +39,7 @@ namespace hardware {
     void handle_sensors();
 
     Task handle_relays_task(2500, TASK_FOREVER, &handle_relays);
-    Task handle_sensors_task(5000, TASK_FOREVER, &handle_sensors);
+    Task handle_sensors_task(10000, TASK_FOREVER, &handle_sensors);
 
     void setup(Scheduler &runner) {
         ACS.autoMidPoint();
@@ -84,7 +84,7 @@ namespace hardware {
         temperature_sensor.write(0xCC); // Send command: skip address find
         temperature_sensor.write(0x44); // Send command: register temperature
 
-        delay(50); // Waiting for registering
+        delay(500); // Waiting for registering
 
         temperature_sensor.reset();
         temperature_sensor.write(0xCC);
