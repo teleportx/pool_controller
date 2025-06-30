@@ -31,7 +31,7 @@ namespace hardware {
     Status pump_status, heater_status;
 
     OneWire temperature_sensor(PIN::TEMPERATURE_SENSOR);
-    double temperature, currency;
+    double temperature = -177, currency;
 
     ACS712 ACS(PIN::CURRENCY_SENSOR, 3.3, 4095, 100);
 
@@ -39,7 +39,7 @@ namespace hardware {
     void handle_sensors();
 
     Task handle_relays_task(2500, TASK_FOREVER, &handle_relays);
-    Task handle_sensors_task(10000, TASK_FOREVER, &handle_sensors);
+    Task handle_sensors_task(5000, TASK_FOREVER, &handle_sensors);
 
     void setup(Scheduler &runner) {
         ACS.autoMidPoint();
@@ -84,7 +84,7 @@ namespace hardware {
         temperature_sensor.write(0xCC); // Send command: skip address find
         temperature_sensor.write(0x44); // Send command: register temperature
 
-        delay(500); // Waiting for registering
+        delay(250); // Waiting for registering
 
         temperature_sensor.reset();
         temperature_sensor.write(0xCC);
@@ -93,8 +93,14 @@ namespace hardware {
         ds_data[0] = temperature_sensor.read(); // Read low byte
         ds_data[1] = temperature_sensor.read(); // Read highest byte
 
-        temperature =  ((ds_data[1] << 8) | ds_data[0]) * 0.0625;
-        Serial.println("Temperature: " + String(temperature));
+        double now_temperature = ((ds_data[1] << 8) | ds_data[0]) * 0.0625;
+        if (abs(temperature - now_temperature) < max_temperature_read_delta or temperature < -170) {
+            temperature = now_temperature;
+            Serial.println("Temperature: " + String(temperature));
+
+        } else {
+            Serial.println("Failed read temperature difference too big.");
+        }
 
         currency = ACS.mA_AC_sampling() / 1000;
         Serial.println("Currency: " + String(currency * 1000) + " mA");

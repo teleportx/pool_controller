@@ -17,7 +17,7 @@ public:
 
 
 namespace hardware {
-    constexpr double critical_temperature = 36;
+    constexpr double critical_temperature = 36, max_temperature_read_delta = 7;
 
     extern Status pump_status, heater_status;
     extern double temperature, currency;
